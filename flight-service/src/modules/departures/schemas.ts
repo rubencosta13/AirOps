@@ -9,8 +9,18 @@ export const createDepartureSchema = z.object({
 })
 export type CreateDepartureInput = z.infer<typeof createDepartureSchema>;
 
-export const findDepartureByPlaneSchema = z.object({
-    planeReg: z.string()
-}); 
+export const findDepartureSchema = z.object({
+    planeReg: z.string().optional(),
+    flightNumber: z.string().optional()
+});
 
-export type FindDepartureByPlaneInput = z.infer<typeof findDepartureByPlaneSchema>;
+export type FindDepartureInput = z.infer<typeof findDepartureSchema>;
+
+export const idParamsSchema = z.object({
+    id: z.string().uuid()
+})
+export type IdParams = z.infer<typeof idParamsSchema>;
+
+
+export const editDepartureSchema = createDepartureSchema.partial();
+export type EditDepartureInput = z.infer<typeof editDepartureSchema>;

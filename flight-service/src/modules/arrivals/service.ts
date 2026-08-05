@@ -1,15 +1,19 @@
 import { ConflictError } from "@/shared/errors/app-error";
 import { arrivalsRepository } from "./repository";
-import { CreateArrivalInput, EditArrivalInput } from "./schemas";
+import { CreateArrivalInput, EditArrivalInput, IdParams } from "./schemas";
 
 export const arrivalsService = { 
     async getAll() { 
         return arrivalsRepository.findAll();
     },
 
+    async getArrival(id: IdParams['id']) { 
+        const arrival =  await arrivalsRepository.findById(id);
+        return arrival;
+    },
+
     async create(data: CreateArrivalInput) {
         const existingArrival = await arrivalsRepository.findActiveByPlaneReg(data.planeReg);
-
         if (existingArrival)
             throw new ConflictError(`Plane ${data.planeReg} already has an active arrival`)
 

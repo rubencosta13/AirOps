@@ -2,10 +2,16 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { arrivalsService } from "./service";
 import { CreateArrivalInput, EditArrivalInput, IdParams } from "./schemas";
 
-export const getArrivals = async (_request: FastifyRequest<{Body: {}}>, reply: FastifyReply) => {
+export const listArrivals = async (_request: FastifyRequest<{Body: {}}>, reply: FastifyReply) => {
     const arrivals = await arrivalsService.getAll();
     return reply.code(200).send(arrivals);
 }
+
+export const getArrival = async (request: FastifyRequest<{Params: IdParams}>, reply: FastifyReply) => {
+    const arrival = await arrivalsService.getArrival(request.params.id);
+    return reply.code(200).send(arrival);
+}
+
 
 export const createArrival = async (request: FastifyRequest<{
         Body: CreateArrivalInput;

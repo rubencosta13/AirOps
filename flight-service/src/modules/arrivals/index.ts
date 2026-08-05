@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify"
 import { createArrivalSchema, idParamsSchema, editArrivalSchema } from "./schemas";
-import { createArrival, deleteArrival, editArrival, getArrivals } from "./controller";
+import { createArrival, deleteArrival, editArrival, getArrival, listArrivals } from "./controller";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 
 
@@ -10,7 +10,8 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
  * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
  */
 const arrivals = async (fastify: FastifyInstance) => { 
-    fastify.get('/', getArrivals)
+    fastify.get('/', listArrivals)
+    fastify.get('/:id', getArrival)
 
     fastify.withTypeProvider<ZodTypeProvider>().post('/', {
         schema: {
