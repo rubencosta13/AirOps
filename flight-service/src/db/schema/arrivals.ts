@@ -17,5 +17,7 @@ export const arrivalsTable = pgTable('arrivals', {
     gate: varchar('gate', { length: 10 }),
 
     arrived: boolean('arrived')
-        .generatedAlwaysAs(() => sql`arrival_timestamp IS NOT NULL`)
+        .generatedAlwaysAs(() => sql`arrival_timestamp IS NOT NULL`),
+    
+    deletedAt: timestamp("deleted_at")
 })

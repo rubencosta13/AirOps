@@ -1,6 +1,6 @@
 import { ConflictError } from "@/shared/errors/app-error";
 import { arrivalsRepository } from "./repository";
-import { CreateArrivalInput, EditArrivalInput, IdParams } from "./schemas";
+import { CreateArrivalInput, EditArrivalInput } from "./schemas";
 
 export const arrivalsService = { 
     async getAll() { 
