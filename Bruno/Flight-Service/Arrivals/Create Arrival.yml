@@ -1,0 +1,25 @@
+info:
+  name: Create Arrival
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: http://127.0.0.1:3000/api/arrivals
+  body:
+    type: json
+    data: |-
+      {
+        "flightNumber": "TP123",
+        "planeReg": "CS-TVAZ",
+        "scheduledArrival": "2026-08-05T18:30:00Z",
+        "runway": "03",
+        "gate": "A12"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

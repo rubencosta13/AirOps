@@ -1,0 +1,25 @@
+info:
+  name: Create Departure
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://127.0.0.1:3000/api/departures
+  body:
+    type: json
+    data: |-
+      {
+        "flightNumber": "TP123",
+        "planeReg": "CS-TVI",
+        "scheduledDeparture": "2026-08-05T19:15:00Z",
+        "runway": "03",
+        "gate": "22"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

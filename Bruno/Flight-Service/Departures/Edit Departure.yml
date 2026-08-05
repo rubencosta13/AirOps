@@ -1,0 +1,21 @@
+info:
+  name: Edit Departure
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: http://127.0.0.1:3000/api/departures/050dfbf1-e674-4c06-8b73-4a6efe866b83
+  body:
+    type: json
+    data: |-
+      {
+        "planeReg": "EI-IKW"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

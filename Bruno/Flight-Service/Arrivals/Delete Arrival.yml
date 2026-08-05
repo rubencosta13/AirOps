@@ -1,0 +1,15 @@
+info:
+  name: Delete Arrival
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: http://127.0.0.1:3000/api/arrivals/28a79687-813f-4100-b5a5-8818f3fa9fc3
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
