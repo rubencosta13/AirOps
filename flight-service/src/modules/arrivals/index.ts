@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify"
-import { createArrivalSchema } from "./schemas";
-import { createArrival, getArrivals } from "./controller";
+import { createArrivalSchema, idParamsSchema, editArrivalSchema } from "./schemas";
+import { createArrival, deleteArrival, editArrival, getArrivals } from "./controller";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 
 
@@ -18,6 +18,20 @@ const arrivals = async (fastify: FastifyInstance) => {
 
         }
     }, createArrival)
+
+    fastify.patch("/:id", {
+        schema: {
+            params: idParamsSchema,
+            body: editArrivalSchema
+        }
+    }, editArrival);
+
+    fastify.delete("/:id", {
+        schema: {
+            params: idParamsSchema
+        }
+    }, deleteArrival)
+
 }
 
 export { arrivals }

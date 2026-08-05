@@ -1,0 +1,266 @@
+{
+  "version": "8",
+  "dialect": "postgres",
+  "id": "30e1fa55-0e98-4c25-ac61-8b887528cb5b",
+  "prevIds": [
+    "c05459dc-0388-414b-8647-141e28b206ea"
+  ],
+  "ddl": [
+    {
+      "isRlsEnabled": false,
+      "name": "arrivals",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "departures",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "arrivals"
+    },
+    {
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "plane_reg",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "arrivals"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "arrival_timestamp",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "arrivals"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "scheduled_arrival",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "arrivals"
+    },
+    {
+      "type": "varchar(12)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "flight_number",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "arrivals"
+    },
+    {
+      "type": "varchar(10)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "runway",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "arrivals"
+    },
+    {
+      "type": "varchar(10)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "gate",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "arrivals"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": {
+        "as": "arrival_timestamp IS NOT NULL",
+        "type": "stored"
+      },
+      "identity": null,
+      "name": "arrived",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "arrivals"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "departures"
+    },
+    {
+      "type": "varchar(12)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "plane_reg",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "departures"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "departure_timestamp",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "departures"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "scheduled_timestamp",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "departures"
+    },
+    {
+      "type": "varchar(12)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "flight_number",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "departures"
+    },
+    {
+      "type": "varchar(12)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "runway",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "departures"
+    },
+    {
+      "type": "varchar(12)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "gate",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "departures"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": {
+        "as": "departure_timestamp IS NOT NULL",
+        "type": "stored"
+      },
+      "identity": null,
+      "name": "departed",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "departures"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "arrivals_pkey",
+      "schema": "public",
+      "table": "arrivals",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "departures_pkey",
+      "schema": "public",
+      "table": "departures",
+      "entityType": "pks"
+    }
+  ],
+  "renames": [
+    "public.arrivals.planeReg->public.arrivals.plane_reg",
+    "public.arrivals.arrivalTimestamp->public.arrivals.arrival_timestamp",
+    "public.arrivals.scheduledArrival->public.arrivals.scheduled_arrival",
+    "public.arrivals.flightNumber->public.arrivals.flight_number",
+    "public.departures.planeReg->public.departures.plane_reg",
+    "public.departures.departureTimestamp->public.departures.departure_timestamp",
+    "public.departures.scheduledTimestamp->public.departures.scheduled_timestamp",
+    "public.departures.flightNumber->public.departures.flight_number"
+  ]
+}

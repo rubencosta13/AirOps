@@ -4,7 +4,8 @@ import {
     serializerCompiler,
     validatorCompiler
 } from "fastify-type-provider-zod";
-import { AppError } from './shared/errors/app-error';
+import { departures } from './modules/departures';
+import { fastifyErrorHandler } from './plugins/error-handler';
 
 
 const fastify = Fastify({
@@ -20,29 +21,12 @@ fastify.setSerializerCompiler(serializerCompiler);
 fastify.register(arrivals, {
     prefix: '/api/arrivals'
 })
+fastify.register(departures, {
+    prefix: '/api/departures'
+})
 
+fastify.setErrorHandler(fastifyErrorHandler);
 
-fastify.setErrorHandler((error, request, reply) => {
-
-    if (error instanceof AppError) {
-        return reply
-            .status(error.statusCode)
-            .send({
-                error: error.code,
-                message: error.message
-            });
-    }
-
-
-    request.log.error(error);
-
-    return reply
-        .status(500)
-        .send({
-            error: "INTERNAL_SERVER_ERROR",
-            message: "Something went wrong"
-        });
-});
 
 export { fastify as server }
 
