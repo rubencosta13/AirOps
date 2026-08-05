@@ -5,7 +5,7 @@ info:
 
 http:
   method: PATCH
-  url: http://127.0.0.1:3000/api/departures/050dfbf1-e674-4c06-8b73-4a6efe866b83
+  url: http://127.0.0.1:3000/api/departures/828da6ac-0039-44d0-a1af-d6d7ab650f9e
   body:
     type: json
     data: |-
