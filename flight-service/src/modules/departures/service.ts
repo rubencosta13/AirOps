@@ -32,5 +32,13 @@ export const departuresService = {
     
         const editedDeparture = await departuresRepository.update(id, data);
         return editedDeparture;
+    },
+
+    async delete(id: IdParams['id']) { 
+        const validDeparture = await departuresRepository.findById(id);
+        if (!validDeparture)
+                throw new ConflictError('Invalid Departure')
+        const deletedDeparture = await departuresRepository.delete(id);
+        return deletedDeparture
     }
 }

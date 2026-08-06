@@ -17,6 +17,11 @@ export const createDeparture = async (request: FastifyRequest<{Body: CreateDepar
 
 export const editDeparture = async (request: FastifyRequest<{Body: EditDepartureInput, Params: IdParams}>, reply: FastifyReply) => { 
     const departure = await departuresService.edit(request.params.id, request.body);
-    return departure
+    return reply.code(200).send(departure)
+}
+
+export const deleteDeparture = async (request: FastifyRequest<{ Params: IdParams}>, reply: FastifyReply) => {
+    const departure = await departuresService.delete(request.params.id);
+    return reply.code(200).send(departure)
 }
 

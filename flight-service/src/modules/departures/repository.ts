@@ -52,4 +52,16 @@ export const departuresRepository = {
         ).returning();
         return result 
     },
+
+    async delete(id: string) {
+        const deletedDeparture = await db.update(departuresTable).set({
+            deletedAt: new Date()
+        }).where(
+            and(
+                eq(departuresTable.id, id),
+                isNull(departuresTable.deletedAt)
+            )
+        );
+        return deletedDeparture;
+    }
 }
