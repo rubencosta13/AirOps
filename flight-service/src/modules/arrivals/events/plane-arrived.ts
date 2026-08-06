@@ -1,23 +1,22 @@
 import { publish } from "@/messaging/publisher";
 import z from "zod";
 
-class DepartureCreatedPublisher { 
-  static readonly topic = "departure.created";
+class ArrivalArrivedPublisher { 
+  static readonly topic = "arrival.arrived";
 
   static readonly schema = z.object({
     id: z.uuid(),
     planeReg: z.string(),
     flightNumber: z.string(),
-    scheduledDeparture: z.date(),
   });
   
-  static async publish(data: unknown) { 
+  static async publish(data: ArrivalArrivedEvent) { 
     const event = this.schema.parse(data);
 
     return publish(this.topic, event);
   }
 }
 
-export type DepartureCreatedEvent = z.infer<typeof DepartureCreatedPublisher.schema>;
-export default DepartureCreatedPublisher
+export type ArrivalArrivedEvent = z.infer<typeof ArrivalArrivedPublisher.schema>;
+export default ArrivalArrivedPublisher
 

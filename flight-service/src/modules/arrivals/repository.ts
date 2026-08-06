@@ -24,7 +24,7 @@ export const arrivalsRepository = {
   },
 
   async findById(id: string) {
-    const result = await db
+    const [result] = await db
       .select()
       .from(arrivalsTable)
       .where(and(eq(arrivalsTable.id, id), isNull(arrivalsTable.deletedAt)));
@@ -32,7 +32,7 @@ export const arrivalsRepository = {
   },
 
   async findActiveByPlaneReg(planeReg: string) {
-    const result = await db
+    const [result] = await db
       .select()
       .from(arrivalsTable)
       .where(
@@ -42,7 +42,7 @@ export const arrivalsRepository = {
           isNull(arrivalsTable.deletedAt),
         ),
       );
-    return result[0];
+    return result;
   },
 
   async delete(id: string) {
@@ -55,4 +55,16 @@ export const arrivalsRepository = {
       .returning();
     return deletedArrival;
   },
+
+  async arrive(id: string) { 
+    const [arrival] = await db.update(arrivalsTable).set({
+      arrivalTimestamp: new Date(),
+    }).where(
+      and(
+        eq(arrivalsTable.id, id),
+        isNull(arrivalsTable.deletedAt)
+      )
+    ).returning();
+    return arrival;
+  }
 };

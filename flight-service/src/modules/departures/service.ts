@@ -6,7 +6,7 @@ import {
   FindDepartureInput,
   IdParams,
 } from "./schemas";
-import { departureCreatedEvent } from "./events/departure-created";
+import DepartureCreatedPublisher from "./events/departure-created";
 
 export const departuresService = {
   async getAll() {
@@ -24,7 +24,7 @@ export const departuresService = {
       );
     }
     const departure = await departuresRepository.create(data);
-    await departureCreatedEvent(departure);
+    await DepartureCreatedPublisher.publish(departure);
     return departure;
   },
 

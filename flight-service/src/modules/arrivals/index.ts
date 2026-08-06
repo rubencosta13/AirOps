@@ -10,6 +10,7 @@ import {
   editArrival,
   getArrival,
   listArrivals,
+  markArrived,
 } from "./controller";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 
@@ -30,6 +31,16 @@ const arrivals = async (fastify: FastifyInstance) => {
       },
     },
     createArrival,
+  );
+
+  fastify.post(
+    "/:id/arrive",
+    {
+      schema: {
+        params: idParamsSchema,
+      },
+    },
+    markArrived,
   );
 
   fastify.patch(

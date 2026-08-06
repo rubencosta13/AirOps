@@ -43,3 +43,11 @@ export const deleteArrival = async (
   const deletedArrival = await arrivalsService.delete(request.params.id);
   return reply.code(200).send(deletedArrival);
 };
+
+export const markArrived = async (
+  request: FastifyRequest<{ Params: IdParams }>,
+  reply: FastifyReply
+) => {
+  const markAsArrived = await arrivalsService.arrive(request.params.id);
+  return reply.code(200).send(markAsArrived);
+}
