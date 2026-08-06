@@ -1,13 +1,19 @@
 import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { turnaroundsTable } from "./turnarounds";
+import { TurnaroundStatus } from "@/modules/turnarounds/enums";
+import { TaskStatus } from "@/modules/tasks/enums";
 
 export const tasksTable = pgTable('tasks', {
     id: uuid().primaryKey().defaultRandom(),
-    turnaround_id: uuid().primaryKey().defaultRandom(),
-    type: varchar({ length: 12}), // change this later
-    status: varchar({ length: 12 }), // chaneh this
+    turnaroundId: uuid().notNull().references(() => turnaroundsTable.id),
+
+    type: varchar({ length: 30 }), // chaneh this
+    status: varchar({ length: 50 }).$type<TaskStatus>().default(TaskStatus.IN_PROGRESS), // change this later
+    
     assigned_team_id: uuid(),
     started_at: timestamp(),
     completed_at: timestamp(),
-    created_at:  timestamp(),
-    updated_at:  timestamp(),
+    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp().$onUpdate(() => new Date()),
+    deletedAt: timestamp()
 })  
