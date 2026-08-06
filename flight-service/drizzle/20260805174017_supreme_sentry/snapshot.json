@@ -2,9 +2,7 @@
   "version": "8",
   "dialect": "postgres",
   "id": "f66c72fe-62a8-4b2f-9b9e-1c137352f256",
-  "prevIds": [
-    "00000000-0000-0000-0000-000000000000"
-  ],
+  "prevIds": ["00000000-0000-0000-0000-000000000000"],
   "ddl": [
     {
       "isRlsEnabled": false,
@@ -120,9 +118,7 @@
       "table": "arrivals"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "arrivals_pkey",
       "schema": "public",

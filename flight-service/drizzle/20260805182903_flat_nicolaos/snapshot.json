@@ -2,9 +2,7 @@
   "version": "8",
   "dialect": "postgres",
   "id": "c05459dc-0388-414b-8647-141e28b206ea",
-  "prevIds": [
-    "f892a504-37f1-4a82-b846-448046aa2cfa"
-  ],
+  "prevIds": ["f892a504-37f1-4a82-b846-448046aa2cfa"],
   "ddl": [
     {
       "isRlsEnabled": false,
@@ -233,9 +231,7 @@
       "table": "departures"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "arrivals_pkey",
       "schema": "public",
@@ -243,9 +239,7 @@
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "departures_pkey",
       "schema": "public",
