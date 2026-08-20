@@ -1,23 +1,37 @@
 import { Password } from "@/plugins/password";
 import { SignInSchema, SignUpSchema } from "./schema";
 import { authRepository } from "./repository";
-import { ConflictError } from "@/shared/errors/app-error";
+import { ConflictError, UnauthorizedError } from "@/shared/errors/app-error";
 import UserCreatedPublisher from "./events/user-created";
+import { sessionService } from "../sessions/service";
+import { tokenService } from "../tokens/service";
+import { createHash } from "node:crypto";
 
 export const authService = {
   async signin(data: SignInSchema) {
-    // 1. check the user exists (
-    //  1.1 validate email and hash input password to compare to the record on db
-    //
-    // )
     const passwordHelper = new Password();
-    const providedHashedPassword = await passwordHelper.hash(data.password);
-    const user = await authRepository.findUser(
-      data.email,
-      providedHashedPassword,
-    );
+    const user = await authRepository.findUserByEmail(data.email);
 
-    return user;
+    if (!user) throw new UnauthorizedError("Invalid Email / Password");
+
+    const passwordsMatch = await passwordHelper.compare(
+      user.password,
+      data.password,
+    );
+    if (!passwordsMatch)
+      throw new UnauthorizedError("Invalid Email / Password");
+
+    const session = await sessionService.create(user.id);
+    const accessToken = await tokenService.createAccessToken({
+      userId: user.id,
+      email: user.email,
+      sessionId: session.id,
+    });
+
+    return {
+      accessToken,
+      refreshToken: session.refreshToken,
+    };
   },
 
   async createUser(data: SignUpSchema) {
@@ -25,11 +39,21 @@ export const authService = {
     if (existingUser) throw new ConflictError("Error creating user");
 
     const passwordHelper = new Password();
-    data.password = await passwordHelper.hash(data.password); // hashed pw
+    const password = await passwordHelper.hash(data.password);
 
-    const user = await authRepository.createUser(data);
+    const user = await authRepository.createUser({
+      ...data,
+      password,
+    });
     UserCreatedPublisher.publish(user);
 
     return user;
+  },
+
+  async logout(refreshToken: string) {
+    if (!refreshToken) {
+      return;
+    }
+    await sessionService.revoke(refreshToken);
   },
 };

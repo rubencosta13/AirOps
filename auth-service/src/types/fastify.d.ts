@@ -1,4 +1,5 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
+import "@fastify/jwt";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -8,5 +9,3 @@ declare module "fastify" {
     ) => Promise<void>;
   }
 }
-
-export {};

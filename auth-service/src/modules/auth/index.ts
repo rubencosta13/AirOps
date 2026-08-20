@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { logout, signIn, signUp } from "./controller";
+import { currentUser, logout, signIn, signUp } from "./controller";
 import { signInSchema, signUpSchema } from "./schema";
 
 export const auth = async (fastify: FastifyInstance) => {
@@ -11,6 +11,14 @@ export const auth = async (fastify: FastifyInstance) => {
       },
     },
     signIn,
+  );
+
+  fastify.get(
+    "/me",
+    {
+      preHandler: [fastify.authenticated],
+    },
+    currentUser,
   );
 
   fastify.post(
@@ -26,7 +34,7 @@ export const auth = async (fastify: FastifyInstance) => {
   fastify.post(
     "/logout",
     {
-      preHandler: fastify.authenticated,
+      preHandler: [fastify.authenticated],
     },
     logout,
   );

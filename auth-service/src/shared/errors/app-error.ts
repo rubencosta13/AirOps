@@ -30,3 +30,9 @@ export class ValidationError extends AppError {
     super(message, 400, "VALIDATION_ERROR");
   }
 }
+
+export class UnauthorizedError extends AppError {
+  constructor(message: string) {
+    super(message, 401, "Not Authorized");
+  }
+}

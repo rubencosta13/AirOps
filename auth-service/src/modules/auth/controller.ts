@@ -6,10 +6,18 @@ export const signIn = async (
   request: FastifyRequest<{ Body: SignInSchema }>,
   reply: FastifyReply,
 ) => {
-  const authedUser = await authService.signin(request.body);
-  if (!authedUser) return reply.status(400).send("Bad request");
+  const tokenDetails = await authService.signin(request.body);
+  const { refreshToken, accessToken } = tokenDetails;
 
-  return reply.status(200).send(authedUser);
+  reply.setCookie("refresh_token", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 30 * 24 * 60 * 60,
+  });
+
+  return reply.status(200).send(accessToken);
 };
 
 export const signUp = async (
@@ -20,6 +28,22 @@ export const signUp = async (
   return reply.code(200).send(jwt);
 };
 
-export const logout = async (_request: FastifyRequest, reply: FastifyReply) => {
-  return reply.status(200).send("done");
+export const currentUser = async (
+  request: FastifyRequest,
+  reply: FastifyReply,
+) => {
+  const userDetails = await request.jwtDecode();
+  return reply.status(200).send(userDetails);
+};
+
+export const logout = async (request: FastifyRequest, reply: FastifyReply) => {
+  await authService.logout(request.cookies.refresh_token);
+
+  reply.clearCookie("refresh_token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+  });
+  return reply.status(204).send();
 };
