@@ -1,10 +1,18 @@
-import { DepartureCreatedListener } from "./departure-created.listener"
-import { PlaneArrivedListener } from "./plane-arrived.listener"
+import { PlaneArrivedListener } from "./plane-arrived.listener";
+import { UserCreatedListener } from "./user-created.listener";
 
 const setupListeners = async () => {
-    new DepartureCreatedListener().createSubscription("notification.departure.created", "departure.created")
-    new PlaneArrivedListener().createSubscription("notification.arrival.arrived", "arrival.arrived")
+  new PlaneArrivedListener().createSubscription(
+    "flight.events",
+    "notification.arrival.arrived",
+    "arrival.arrived",
+  );
 
-}
+  new UserCreatedListener().createSubscription(
+    "auth.events",
+    "notification.auth.created",
+    "auth.created",
+  );
+};
 
-export { setupListeners }
+export { setupListeners };

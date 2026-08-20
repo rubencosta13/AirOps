@@ -5,6 +5,8 @@ import {
 } from "fastify-type-provider-zod";
 import { fastifyErrorHandler } from "./plugins/error-handler";
 import { tasks } from "./modules/tasks";
+import { turnaround } from "./modules/turnarounds";
+import { teams } from "./modules/teams";
 
 const fastify = Fastify({
   logger: true,
@@ -13,7 +15,9 @@ const fastify = Fastify({
 fastify.setValidatorCompiler(validatorCompiler);
 fastify.setSerializerCompiler(serializerCompiler);
 
-fastify.register(tasks, { prefix: '/api/tasks'});
+fastify.register(tasks, { prefix: "/api/tasks" });
+fastify.register(turnaround, { prefix: "/api/turnarounds" });
+fastify.register(teams, { prefix: "/api/teams" });
 
 fastify.setErrorHandler(fastifyErrorHandler);
 
