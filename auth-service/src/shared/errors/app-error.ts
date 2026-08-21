@@ -36,3 +36,9 @@ export class UnauthorizedError extends AppError {
     super(message, 401, "Not Authorized");
   }
 }
+
+export class BadRequestError extends AppError {
+  constructor(message: string) {
+    super(message, 400, "Something went wrong");
+  }
+}

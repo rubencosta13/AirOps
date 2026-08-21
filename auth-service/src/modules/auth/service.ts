@@ -1,11 +1,16 @@
 import { Password } from "@/plugins/password";
 import { SignInSchema, SignUpSchema } from "./schema";
 import { authRepository } from "./repository";
-import { ConflictError, UnauthorizedError } from "@/shared/errors/app-error";
+import {
+  BadRequestError,
+  ConflictError,
+  UnauthorizedError,
+} from "@/shared/errors/app-error";
 import UserCreatedPublisher from "./events/user-created";
 import { sessionService } from "../sessions/service";
 import { tokenService } from "../tokens/service";
-import { createHash } from "node:crypto";
+import { emailService } from "@/email";
+import { passwordResetTokenService } from "../password-reset/service";
 
 export const authService = {
   async signin(data: SignInSchema) {
@@ -50,10 +55,59 @@ export const authService = {
     return user;
   },
 
+  async refresh(token: string) {
+    const { session, refreshToken: newRefreshToken } =
+      await sessionService.refresh(token);
+
+    const user = await authRepository.findUserById(session.userId);
+    if (!user) throw new UnauthorizedError("Not Allowed");
+
+    const accessToken = await tokenService.createAccessToken({
+      userId: user.id,
+      email: user.email,
+      sessionId: session.id,
+    });
+
+    return { accessToken, refreshToken: newRefreshToken };
+  },
+
   async logout(refreshToken: string) {
     if (!refreshToken) {
       return;
     }
     await sessionService.revoke(refreshToken);
+  },
+
+  async forgotPassword(email: string) {
+    const user = await authRepository.findUserByEmail(email);
+    if (!user) return;
+
+    await authRepository.invalidatePasswordResetTokens(user.id);
+
+    const token = passwordResetTokenService.create();
+
+    await authRepository.createPasswordResetToken({
+      userId: user.id,
+      tokenHash: passwordResetTokenService.hash(token),
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000), // 15 mins TTL
+    });
+
+    await emailService.sendForgotPassword(email, token);
+  },
+
+  async resetPassword(token: string, password: string) {
+    const tokenHash = passwordResetTokenService.hash(token);
+
+    const resetToken =
+      await passwordResetTokenService.findValidPasswordResetToken(tokenHash);
+
+    if (!resetToken)
+      throw new BadRequestError("Invalid or Expired Password Reset Token");
+
+    const passwordHelper = new Password();
+    const passwordHash = await passwordHelper.hash(password);
+
+    await authRepository.resetPassword(resetToken.userId, passwordHash);
+    await passwordResetTokenService.consume(resetToken.id);
   },
 };

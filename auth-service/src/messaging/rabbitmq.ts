@@ -10,6 +10,22 @@ export const connectRabbitMQ = async () => {
   await channel.assertExchange("auth.events", "topic", {
     durable: true,
   });
+
+  connection.on("error", (err) => {
+    console.error("RabbitMQ connection error:", err);
+  });
+
+  connection.on("close", () => {
+    console.error("RabbitMQ connection closed");
+  });
+
+  channel.on("error", (err) => {
+    console.error("RabbitMQ channel error:", err);
+  });
+
+  channel.on("close", () => {
+    console.error("RabbitMQ channel closed");
+  });
 };
 
 export const getChannel = async () => {

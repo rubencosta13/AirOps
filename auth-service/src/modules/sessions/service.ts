@@ -45,6 +45,7 @@ export const sessionService = {
     );
     if (!updatedSession)
       throw new UnauthorizedError("Refresh Token already used");
+
     return {
       session,
       refreshToken: newRefreshToken,

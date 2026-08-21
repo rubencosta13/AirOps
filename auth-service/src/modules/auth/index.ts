@@ -1,6 +1,19 @@
 import { FastifyInstance } from "fastify";
-import { currentUser, logout, signIn, signUp } from "./controller";
-import { signInSchema, signUpSchema } from "./schema";
+import {
+  currentUser,
+  forgotPassword,
+  logout,
+  refreshToken,
+  resetPassword,
+  signIn,
+  signUp,
+} from "./controller";
+import {
+  forgotPasswordSchema,
+  resetPasswordSchema,
+  signInSchema,
+  signUpSchema,
+} from "./schema";
 
 export const auth = async (fastify: FastifyInstance) => {
   fastify.post(
@@ -22,6 +35,14 @@ export const auth = async (fastify: FastifyInstance) => {
   );
 
   fastify.post(
+    "/refresh",
+    {
+      preHandler: [fastify.authenticated],
+    },
+    refreshToken,
+  );
+
+  fastify.post(
     "/signup",
     {
       schema: {
@@ -29,6 +50,26 @@ export const auth = async (fastify: FastifyInstance) => {
       },
     },
     signUp,
+  );
+
+  fastify.post(
+    "/forgot-password",
+    {
+      schema: {
+        body: forgotPasswordSchema,
+      },
+    },
+    forgotPassword,
+  );
+
+  fastify.post(
+    "/reset-password",
+    {
+      schema: {
+        body: resetPasswordSchema,
+      },
+    },
+    resetPassword,
   );
 
   fastify.post(

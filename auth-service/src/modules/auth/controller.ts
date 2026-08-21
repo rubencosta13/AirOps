@@ -1,5 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { SignInSchema, SignUpSchema } from "./schema";
+import {
+  ForgotPasswordSchema,
+  ResetPasswordSchema,
+  SignInSchema,
+  SignUpSchema,
+} from "./schema";
 import { authService } from "./service";
 
 export const signIn = async (
@@ -46,4 +51,47 @@ export const logout = async (request: FastifyRequest, reply: FastifyReply) => {
     path: "/",
   });
   return reply.status(204).send();
+};
+
+export const refreshToken = async (
+  request: FastifyRequest,
+  reply: FastifyReply,
+) => {
+  const refreshToken = request.cookies.refresh_token;
+  if (!refreshToken) return reply.code(401).send("Missing refresh token");
+
+  const tokens = await authService.refresh(refreshToken);
+
+  reply.setCookie("refresh_token", tokens.refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 30 * 24 * 60 * 60,
+  });
+
+  return reply.send({
+    accessToken: tokens.accessToken,
+  });
+};
+
+export const forgotPassword = async (
+  request: FastifyRequest<{ Body: ForgotPasswordSchema }>,
+  reply: FastifyReply,
+) => {
+  await authService.forgotPassword(request.body.email);
+  return reply
+    .status(200)
+    .send(
+      "If an account exists with that email, you will receive a password reset link.",
+    );
+};
+
+export const resetPassword = async (
+  request: FastifyRequest<{ Body: ResetPasswordSchema }>,
+  reply: FastifyReply,
+) => {
+  const { token, password } = request.body;
+  await authService.resetPassword(token, password);
+  return reply.status(200).send("OK");
 };
