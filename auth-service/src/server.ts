@@ -9,11 +9,14 @@ import fastifySession from "@fastify/session";
 import fastifyCookie from "@fastify/cookie";
 import jwtPlugin from "./plugins/jwt";
 import authenticationPlugin from "./plugins/authentication";
-
+import cors from "@fastify/cors";
 const fastify = Fastify({
   logger: true,
 });
-
+fastify.register(cors, {
+  origin: true,
+  credentials: true
+});
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: "djpioawopdjawjopdawjopjopdajopdawjpjadopwjopdawjop",

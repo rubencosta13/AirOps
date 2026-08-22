@@ -1,7 +1,7 @@
 import { publish } from "@/messaging/publisher";
 import z from "zod";
 
-class DepartureCreatedPublisher { 
+class DepartureCreatedPublisher {
   static readonly topic = "departure.created";
 
   static readonly schema = z.object({
@@ -10,14 +10,15 @@ class DepartureCreatedPublisher {
     flightNumber: z.string(),
     scheduledDeparture: z.date(),
   });
-  
-  static async publish(data: unknown) { 
+
+  static async publish(data: unknown) {
     const event = this.schema.parse(data);
 
     return publish(this.topic, event);
   }
 }
 
-export type DepartureCreatedEvent = z.infer<typeof DepartureCreatedPublisher.schema>;
-export default DepartureCreatedPublisher
-
+export type DepartureCreatedEvent = z.infer<
+  typeof DepartureCreatedPublisher.schema
+>;
+export default DepartureCreatedPublisher;

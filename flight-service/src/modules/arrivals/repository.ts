@@ -56,15 +56,14 @@ export const arrivalsRepository = {
     return deletedArrival;
   },
 
-  async arrive(id: string) { 
-    const [arrival] = await db.update(arrivalsTable).set({
-      arrivalTimestamp: new Date(),
-    }).where(
-      and(
-        eq(arrivalsTable.id, id),
-        isNull(arrivalsTable.deletedAt)
-      )
-    ).returning();
+  async arrive(id: string) {
+    const [arrival] = await db
+      .update(arrivalsTable)
+      .set({
+        arrivalTimestamp: new Date(),
+      })
+      .where(and(eq(arrivalsTable.id, id), isNull(arrivalsTable.deletedAt)))
+      .returning();
     return arrival;
-  }
+  },
 };

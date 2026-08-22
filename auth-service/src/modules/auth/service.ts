@@ -45,6 +45,11 @@ export const authService = {
     };
   },
 
+  async getUserDetails(email: string) {
+    const user = await authRepository.findUserByEmail(email);
+    return user;
+  },
+
   async createUser(data: SignUpSchema) {
     const existingUser = await authRepository.findUserByEmail(data.email);
     if (existingUser) throw new ConflictError("Error creating user");

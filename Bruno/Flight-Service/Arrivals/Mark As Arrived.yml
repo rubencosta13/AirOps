@@ -1,17 +1,17 @@
 info:
-  name: Create Arrival
+  name: Mark As Arrived
   type: http
-  seq: 3
+  seq: 5
 
 http:
   method: POST
-  url: http://127.0.0.1:3000/api/arrivals
+  url: http://127.0.0.1:3000/api/arrivals/f759a789-9434-42ec-8970-0f3115b629a0/arrive
   body:
     type: json
     data: |-
       {
         "flightNumber": "TP123",
-        "planeReg": "daw",
+        "planeReg": "CS-TVAZ",
         "scheduledArrival": "2026-08-05T18:30:00Z",
         "runway": "03",
         "gate": "A12"

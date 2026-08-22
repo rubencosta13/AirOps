@@ -17,12 +17,11 @@ export const arrivalsService = {
     const existingArrival = await arrivalsRepository.findActiveByPlaneReg(
       data.planeReg,
     );
-    console.log(existingArrival)
     if (existingArrival)
       throw new ConflictError(
         `Plane ${data.planeReg} already has an active arrival`,
       );
-    
+
     return arrivalsRepository.create(data);
   },
 
@@ -38,10 +37,10 @@ export const arrivalsService = {
     return arrivalsRepository.delete(id);
   },
 
-  async arrive(id: IdParams['id']) { 
+  async arrive(id: IdParams["id"]) {
     const validArrival = await arrivalsRepository.findById(id);
     if (!validArrival) throw new ConflictError(`Arrival not found`);
-    
+
     if (validArrival.arrived)
       throw new ConflictError("Plane has already arrived");
 
@@ -49,5 +48,5 @@ export const arrivalsService = {
 
     ArrivalArrivedPublisher.publish(markAsArrived);
     return markAsArrived;
-  }
+  },
 };

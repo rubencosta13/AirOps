@@ -1,0 +1,21 @@
+info:
+  name: Create team
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:3001/api/teams
+  body:
+    type: json
+    data: |-
+      {
+        "name": "RAMP TEAM A"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

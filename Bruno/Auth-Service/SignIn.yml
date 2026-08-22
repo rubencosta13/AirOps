@@ -1,0 +1,30 @@
+info:
+  name: SignIn
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3005/api/auth/signin
+  body:
+    type: json
+    data: |-
+      {
+        "email": "rubenaladavosccostaa@gmail.com",
+        "password": "123"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const response = res.getBody();
+
+        bru.setEnvVar("accessToken", response.accessToken);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

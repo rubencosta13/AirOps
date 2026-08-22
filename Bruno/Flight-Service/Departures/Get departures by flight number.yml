@@ -1,20 +1,16 @@
 info:
-  name: Create Departure
+  name: Get departures by flight number
   type: http
-  seq: 2
+  seq: 5
 
 http:
-  method: POST
+  method: GET
   url: http://127.0.0.1:3000/api/departures
   body:
     type: json
     data: |-
       {
-        "flightNumber": "TP1333223",
-        "planeReg": "CS-32",
-        "scheduledDeparture": "2026-08-05T19:15:00Z",
-        "runway": "03",
-        "gate": "22"
+
       }
   auth: inherit
 

@@ -1,11 +1,11 @@
 info:
-  name: Get Arrivals
+  name: Start Task
   type: http
-  seq: 2
+  seq: 5
 
 http:
-  method: GET
-  url: http://127.0.0.1:3000/api/arrivals/
+  method: PATCH
+  url: http://localhost:3001/api/tasks/6761cde5-5b3f-48f0-8d30-05be92553717/start
   auth: inherit
 
 settings:

@@ -1,0 +1,17 @@
+info:
+  name: Refresh Token
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: http://localhost:3005/api/auth/refresh
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

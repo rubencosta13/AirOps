@@ -1,0 +1,21 @@
+info:
+  name: Verify Account
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: http://localhost:3005/api/auth/verify-account
+  body:
+    type: json
+    data: |-
+      {
+        "token": "4bd3c3eaf8886d49d591279d23383405b27017265ade1a2fa7736010f682efde"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

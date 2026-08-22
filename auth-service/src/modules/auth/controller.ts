@@ -23,7 +23,7 @@ export const signIn = async (
     maxAge: 30 * 24 * 60 * 60,
   });
 
-  return reply.status(200).send(accessToken);
+  return reply.status(200).send({ accessToken });
 };
 
 export const signUp = async (
@@ -39,7 +39,10 @@ export const currentUser = async (
   reply: FastifyReply,
 ) => {
   const userDetails = await request.jwtDecode();
-  return reply.status(200).send(userDetails);
+  const { name, email, id } = await authService.getUserDetails(
+    userDetails.email,
+  );
+  return reply.status(200).send({ name, email, id });
 };
 
 export const logout = async (request: FastifyRequest, reply: FastifyReply) => {
