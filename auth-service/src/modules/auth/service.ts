@@ -11,6 +11,7 @@ import { sessionService } from "../sessions/service";
 import { tokenService } from "../tokens/service";
 import { emailService } from "@/email";
 import { passwordResetTokenService } from "../password-reset/service";
+import { emailValidationService } from "../email-validation/service";
 
 export const authService = {
   async signin(data: SignInSchema) {
@@ -25,6 +26,11 @@ export const authService = {
     );
     if (!passwordsMatch)
       throw new UnauthorizedError("Invalid Email / Password");
+
+    if (!user.verified)
+      throw new UnauthorizedError(
+        "Please verify your account, using the email sent to you",
+      );
 
     const session = await sessionService.create(user.id);
     const accessToken = await tokenService.createAccessToken({
@@ -50,7 +56,9 @@ export const authService = {
       ...data,
       password,
     });
-    UserCreatedPublisher.publish(user);
+
+    const verificationToken = await emailValidationService.create(user.id);
+    await emailService.sendAccountRegister(user.email, user, verificationToken);
 
     return user;
   },
@@ -109,5 +117,11 @@ export const authService = {
 
     await authRepository.resetPassword(resetToken.userId, passwordHash);
     await passwordResetTokenService.consume(resetToken.id);
+  },
+
+  async verifyAccount(token: string) {
+    const user = await emailValidationService.verify(token);
+    UserCreatedPublisher.publish(user);
+    return user;
   },
 };

@@ -1,8 +1,10 @@
 import db from "@/db";
 import { usersTable } from "@/db/schema/users";
-import { and, eq, isNull } from "drizzle-orm";
+import { and, EmptyRelations, eq, isNull } from "drizzle-orm";
 import { SignUpSchema } from "./schema";
 import { passwordResetTokenTable } from "@/db/schema/password-reset";
+import { PgAsyncTransaction } from "drizzle-orm/pg-core";
+import { NodePgQueryResultHKT } from "drizzle-orm/node-postgres";
 
 interface CreatePasswordResetToken {
   userId: string;
@@ -77,5 +79,27 @@ export const authRepository = {
       .values(data)
       .returning();
     return token;
+  },
+
+  async markAsVerified(
+    userId: string,
+    tx: PgAsyncTransaction<NodePgQueryResultHKT, EmptyRelations>,
+  ) {
+    const [user] = await tx
+      .update(usersTable)
+      .set({
+        verified: true,
+        verifiedAt: new Date(),
+      })
+      .where(
+        and(
+          isNull(usersTable.verifiedAt),
+          eq(usersTable.verified, false),
+          isNull(usersTable.deletedAt),
+          eq(usersTable.id, userId),
+        ),
+      )
+      .returning();
+    return user;
   },
 };

@@ -7,12 +7,14 @@ import {
   resetPassword,
   signIn,
   signUp,
+  verifyAccount,
 } from "./controller";
 import {
   forgotPasswordSchema,
   resetPasswordSchema,
   signInSchema,
   signUpSchema,
+  verifyAccountSchema,
 } from "./schema";
 
 export const auth = async (fastify: FastifyInstance) => {
@@ -40,6 +42,16 @@ export const auth = async (fastify: FastifyInstance) => {
       preHandler: [fastify.authenticated],
     },
     refreshToken,
+  );
+
+  fastify.post(
+    "/verify-account",
+    {
+      schema: {
+        body: verifyAccountSchema,
+      },
+    },
+    verifyAccount,
   );
 
   fastify.post(

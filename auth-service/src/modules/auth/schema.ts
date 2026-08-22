@@ -27,3 +27,9 @@ export const resetPasswordSchema = z.object({
 });
 
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
+
+export const verifyAccountSchema = z.object({
+  token: z.string().nonempty(),
+});
+
+export type VerifyAccountSchema = z.infer<typeof verifyAccountSchema>;

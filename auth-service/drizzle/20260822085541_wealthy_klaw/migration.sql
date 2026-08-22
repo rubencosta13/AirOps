@@ -1,0 +1,1 @@
+ALTER TABLE "email_validation_table" ALTER COLUMN "used_at" DROP NOT NULL;

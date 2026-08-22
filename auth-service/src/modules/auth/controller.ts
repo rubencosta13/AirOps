@@ -4,6 +4,7 @@ import {
   ResetPasswordSchema,
   SignInSchema,
   SignUpSchema,
+  VerifyAccountSchema,
 } from "./schema";
 import { authService } from "./service";
 
@@ -94,4 +95,13 @@ export const resetPassword = async (
   const { token, password } = request.body;
   await authService.resetPassword(token, password);
   return reply.status(200).send("OK");
+};
+
+export const verifyAccount = async (
+  request: FastifyRequest<{ Body: VerifyAccountSchema }>,
+  reply: FastifyReply,
+) => {
+  const { token } = request.body;
+  await authService.verifyAccount(token);
+  return reply.code(204).send();
 };
