@@ -1,22 +1,17 @@
-name: Auth Service - Tests
+name: Tests
 
 on:
   pull_request:
     paths:
-      - "auth-service/src/**"
-      - "auth-service/package.json"
-      - "auth-service/yarn.lock"
-      - "auth-service/vitest.config.ts"
+      - "auth-service/**"
   push:
     paths:
-      - "auth-service/src/**"
-      - "auth-service/package.json"
-      - "auth-service/yarn.lock"
-      - "auth-service/vitest.config.ts"
+      - "auth-service/**"
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: auth-service
@@ -28,8 +23,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: lts
           cache: yarn
+          cache-dependency-path: ${{ github.workspace }}/auth-service/yarn.lock
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
