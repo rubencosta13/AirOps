@@ -10,13 +10,15 @@ import fastifyCookie from "@fastify/cookie";
 import jwtPlugin from "./plugins/jwt";
 import authenticationPlugin from "./plugins/authentication";
 import cors from "@fastify/cors";
+import requireVerified from "./plugins/require-verified";
 const fastify = Fastify({
   logger: true,
 });
 fastify.register(cors, {
   origin: true,
-  credentials: true
+  credentials: true,
 });
+
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   secret: "djpioawopdjawjopdawjopjopdajopdawjpjadopwjopdawjop",
@@ -26,6 +28,7 @@ fastify.setValidatorCompiler(validatorCompiler);
 fastify.setSerializerCompiler(serializerCompiler);
 fastify.register(jwtPlugin);
 fastify.register(authenticationPlugin);
+fastify.register(requireVerified);
 
 fastify.register(auth, {
   prefix: "/api/auth",

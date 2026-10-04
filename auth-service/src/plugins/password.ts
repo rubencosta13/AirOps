@@ -1,13 +1,16 @@
 import * as argon2 from "argon2";
 
+type HashOptions = Parameters<typeof argon2.hash>[1];
+
 class Password {
-  private HASHER = argon2;
+  constructor(private readonly options?: HashOptions) {}
+
   public async hash(password: string) {
-    return await this.HASHER.hash(password);
+    return await argon2.hash(password, this.options);
   }
 
-  public async compare(db: string, input: string) {
-    return await this.HASHER.verify(db, input);
+  public async compare(hash: string, password: string) {
+    return await argon2.verify(hash, password);
   }
 }
 

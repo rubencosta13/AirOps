@@ -17,7 +17,8 @@ export const authService = {
   async signin(data: SignInSchema) {
     const passwordHelper = new Password();
     const user = await authRepository.findUserByEmail(data.email);
-
+    if (data.password.length < 4)
+      throw new BadRequestError("Password must contain more than 4 characters");
     if (!user) throw new UnauthorizedError("Invalid Email / Password");
 
     const passwordsMatch = await passwordHelper.compare(

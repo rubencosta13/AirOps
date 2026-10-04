@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import {
+  AccessToken,
   ForgotPasswordSchema,
   ResetPasswordSchema,
   SignInSchema,
@@ -38,7 +39,7 @@ export const currentUser = async (
   request: FastifyRequest,
   reply: FastifyReply,
 ) => {
-  const userDetails = await request.jwtDecode();
+  const userDetails = await request.jwtDecode<AccessToken>();
   const { name, email, id } = await authService.getUserDetails(
     userDetails.email,
   );

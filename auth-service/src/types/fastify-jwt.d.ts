@@ -12,6 +12,8 @@ declare module "@fastify/jwt" {
       sub: string;
       email: string;
       sid: string;
+      id: string;
+      verified: boolean;
     };
   }
 }

@@ -31,7 +31,7 @@ export const auth = async (fastify: FastifyInstance) => {
   fastify.get(
     "/me",
     {
-      preHandler: [fastify.authenticated],
+      preHandler: [fastify.authenticated, fastify.requireVerified],
     },
     currentUser,
   );
