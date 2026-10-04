@@ -8,11 +8,7 @@ http:
   url: http://localhost:3005/api/auth/me
   body:
     type: json
-    data: |-
-      {
-        "email": "test@test.com",
-        "password": "123"
-      }
+    data: ""
   auth:
     type: bearer
     token: "{{accessToken}}"

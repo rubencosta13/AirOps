@@ -1,16 +1,25 @@
-name: Tests
+name: Auth Service - Tests
 
 on:
   pull_request:
     paths:
-      - "src/**"
+      - "auth-service/src/**"
+      - "auth-service/package.json"
+      - "auth-service/yarn.lock"
+      - "auth-service/vitest.config.ts"
   push:
     paths:
-      - "src/**"
+      - "auth-service/src/**"
+      - "auth-service/package.json"
+      - "auth-service/yarn.lock"
+      - "auth-service/vitest.config.ts"
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: auth-service
 
     steps:
       - name: Checkout
