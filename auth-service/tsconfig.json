@@ -46,21 +46,6 @@
       "@/*": [
         "./src/*"
       ],
-      "@/app": [
-        "./src/app.js"
-      ],
-      "@routes/*": [
-        "./src/routes/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@models/*": [
-        "./src/models/*"
-      ],
-      "@/listeners/*": [
-        "./src/events/listeners/*"
-      ]
     } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     "typeRoots": [

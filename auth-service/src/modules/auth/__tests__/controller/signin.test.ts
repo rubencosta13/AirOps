@@ -1,7 +1,7 @@
 import { server } from "@/server";
 import { describe, expect, it } from "vitest";
 
-describe("Auth Controller", () => {
+describe("Sign in controller", () => {
   it("GET /signin returns error if no user details were provided", async () => {
     const response = await server.inject({
       method: "POST",

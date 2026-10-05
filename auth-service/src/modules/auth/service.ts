@@ -5,7 +5,7 @@ import {
   BadRequestError,
   ConflictError,
   UnauthorizedError,
-} from "@/shared/errors/app-error";
+} from "@/errors/app-error";
 import UserCreatedPublisher from "./events/user-created";
 import { sessionService } from "../sessions/service";
 import { tokenService } from "../tokens/service";

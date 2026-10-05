@@ -1,4 +1,4 @@
-import { UnauthorizedError } from "@/shared/errors/app-error";
+import { UnauthorizedError } from "@/errors/app-error";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import fp from "fastify-plugin";
 

@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from "node:crypto";
 import { emailValidationRepository } from "./repository";
-import { UnauthorizedError } from "@/shared/errors/app-error";
+import { UnauthorizedError } from "@/errors/app-error";
 import db from "@/db";
 import { authRepository } from "../auth/repository";
 

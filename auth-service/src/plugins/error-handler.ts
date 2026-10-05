@@ -1,4 +1,4 @@
-import { AppError } from "@/shared/errors/app-error";
+import { AppError } from "@/errors/app-error";
 import { FastifyError, FastifyReply, FastifyRequest } from "fastify";
 
 export const fastifyErrorHandler = (

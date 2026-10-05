@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from "node:crypto";
 import { sessionRepository } from "./repository";
-import { UnauthorizedError } from "@/shared/errors/app-error";
+import { UnauthorizedError } from "@/errors/app-error";
 
 const REFRESH_TOKEN_TTL = 30 * 24 * 60 * 60 * 1000;
 

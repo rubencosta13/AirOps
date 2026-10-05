@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import * as fc from "fast-check";
-import { Password } from "../../../plugins/password";
+import { Password } from "@/plugins/password";
 
-describe("AuthService – property tests", () => {
+describe("AuthService - property tests", () => {
   it("password hashing is deterministic and verifiable", async () => {
     await fc.assert(
       fc.asyncProperty(
@@ -14,7 +14,7 @@ describe("AuthService – property tests", () => {
             parallelism: 1,
           });
           const hash = await passwordUtils.hash(password);
-          const isValid = await passwordUtils.compare(hash, password); // check argument order!
+          const isValid = await passwordUtils.compare(hash, password);
           expect(isValid).toBe(true);
         },
       ),

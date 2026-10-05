@@ -1,7 +1,6 @@
 import { authRepository } from "@/modules/auth/repository";
-import { authService } from "@/modules/auth/service";
 import { sessionRepository } from "@/modules/sessions/repository";
-import { UnauthorizedError } from "@/shared/errors/app-error";
+import { UnauthorizedError } from "@/errors/app-error";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import fp from "fastify-plugin";
 
