@@ -1,4 +1,9 @@
-import { beforeAll, vi } from "vitest";
+import { randomBytes } from "node:crypto";
+import { vi } from "vitest";
+
+process.env.JWT_SECRET = randomBytes(32).toString("hex");
+process.env.FRONTEND_URL = "https://test.com";
+process.env.SESSION_SECRET = randomBytes(32).toString("base64");
 
 const mockDb = vi.hoisted(() => ({
   select: vi.fn().mockReturnThis(),
@@ -21,8 +26,3 @@ const mockDb = vi.hoisted(() => ({
 vi.mock("@/db", () => ({
   default: mockDb,
 }));
-
-beforeAll(() => {
-  process.env.JWT_SECRET = "1234";
-  process.env.FRONTEND_URL = "https://test.com";
-});

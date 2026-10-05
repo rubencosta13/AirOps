@@ -21,7 +21,7 @@ fastify.register(cors, {
 
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
-  secret: "dpdoawok",
+  secret: process.env.SESSION_SECRET!,
 });
 
 fastify.setValidatorCompiler(validatorCompiler);

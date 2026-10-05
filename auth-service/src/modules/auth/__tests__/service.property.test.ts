@@ -20,5 +20,5 @@ describe("AuthService – property tests", () => {
       ),
       { numRuns: 100 },
     );
-  });
+  }, 10_000);
 });

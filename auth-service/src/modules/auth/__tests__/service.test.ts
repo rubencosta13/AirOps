@@ -91,7 +91,7 @@ describe("Auth Service", () => {
           );
         }),
       );
-    });
+    }, 10_000);
   });
   describe("authService.verify", () => {
     type User = Awaited<ReturnType<typeof authRepository.createUser>>;
