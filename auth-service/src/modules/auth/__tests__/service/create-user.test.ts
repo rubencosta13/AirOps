@@ -1,9 +1,10 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { emailService } from "@/email";
 import { authRepository } from "@/modules/auth/repository";
 import { authService } from "@/modules/auth/service";
 import fc from "fast-check";
 import { User } from "@/db/schema/users";
+import { ConflictError } from "@/errors/app-error";
 
 describe("authService.createUser", () => {
   const user: User = {
@@ -17,9 +18,14 @@ describe("authService.createUser", () => {
     updatedAt: new Date(),
     deletedAt: null,
   };
-  it("creates a valid user and returns the user", async () => {
-    vi.spyOn(authRepository, "createUser").mockResolvedValue(user);
 
+  beforeEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("creates a valid user and returns the user", async () => {
+    vi.spyOn(authRepository, "findUserByEmail").mockResolvedValue(null);
+    vi.spyOn(authRepository, "createUser").mockResolvedValue(user);
     vi.spyOn(emailService, "sendAccountRegister").mockResolvedValue(undefined);
 
     const result = await authService.createUser({
@@ -31,7 +37,20 @@ describe("authService.createUser", () => {
     expect(result).toEqual(user);
   });
 
+  it("throws ConflictError if a user already exists", async () => {
+    vi.spyOn(authRepository, "findUserByEmail").mockResolvedValue(user);
+
+    await expect(
+      authService.createUser({
+        email: user.email,
+        name: "Someone",
+        password: "new-user-new-password",
+      }),
+    ).rejects.toThrow(ConflictError);
+  });
+
   it("sends an account registration email", async () => {
+    vi.spyOn(authRepository, "findUserByEmail").mockResolvedValue(null);
     vi.spyOn(authRepository, "createUser").mockResolvedValue(user);
 
     const sendAccountRegister = vi
@@ -53,6 +72,7 @@ describe("authService.createUser", () => {
 
   it("creates users correctly for arbitrary valid inputs", async () => {
     const createUser = vi.spyOn(authRepository, "createUser");
+    const findUserByEmail = vi.spyOn(authRepository, "findUserByEmail");
 
     vi.spyOn(emailService, "sendAccountRegister").mockResolvedValue(undefined);
 
@@ -70,13 +90,12 @@ describe("authService.createUser", () => {
           email: input.email,
         };
 
+        findUserByEmail.mockResolvedValue(null);
         createUser.mockResolvedValue(generatedUser);
-        createUser.mockClear();
 
         const result = await authService.createUser(input);
 
         expect(result).toEqual(generatedUser);
-
         expect(emailService.sendAccountRegister).toHaveBeenCalledWith(
           input.email,
           generatedUser,

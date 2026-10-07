@@ -12,7 +12,7 @@ import authenticationPlugin from "./plugins/authentication";
 import cors from "@fastify/cors";
 import requireVerified from "./plugins/require-verified";
 const fastify = Fastify({
-  logger: true,
+  logger: process.env.NODE_ENV !== "test",
 });
 fastify.register(cors, {
   origin: true,

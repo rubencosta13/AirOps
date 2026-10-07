@@ -1,10 +1,12 @@
 import { randomBytes } from "node:crypto";
-import { vi } from "vitest";
+import { afterAll, beforeAll, vi } from "vitest";
 
+// 1. Set ALL secrets first
 process.env.JWT_SECRET = randomBytes(32).toString("hex");
+process.env.SESSION_SECRET = randomBytes(32).toString("hex");
 process.env.FRONTEND_URL = "https://test.com";
-process.env.SESSION_SECRET = randomBytes(32).toString("base64");
 
+// 2. Mock the database BEFORE importing anything that uses it
 const mockDb = vi.hoisted(() => ({
   select: vi.fn().mockReturnThis(),
   from: vi.fn().mockReturnThis(),
