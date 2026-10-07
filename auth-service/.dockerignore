@@ -1,0 +1,49 @@
+# Dependencies
+node_modules
+.yarn
+.pnp
+.pnp.js
+
+# Tests
+**/__tests__
+**/__tests__/**
+**/*.test.*
+**/*.spec.*
+**/test/**
+**/tests/**
+**/__mocks__/**
+coverage
+.nyc_output
+
+# Test configuration
+vitest.config.*
+vite.config.*
+
+# Development
+.git
+.github
+.gitignore
+Dockerfile*
+docker-compose*.yml
+*.md
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local/development files
+.vscode
+.idea
+.DS_Store
+*.log
+
+# Drizzle development files
+drizzle
+drizzle.config.*
+
+# Build/cache
+dist
+build
+.turbo
+.cache

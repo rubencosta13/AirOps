@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "test": "vitest",
+    "test:unit": "vitest run src/modules/**/__tests__/unit",
+    "test:integration": "vitest run src/modules/**/__tests__/integration",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
@@ -28,6 +30,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.1.2",
     "@types/nodemailer": "^8.0.1",

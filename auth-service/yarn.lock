@@ -55,6 +55,11 @@
   resolved "https://registry.yarnpkg.com/@drizzle-team/brocli/-/brocli-0.12.1.tgz#887de5e3389f826975236c2eac78b98b1a1eb10a"
   integrity sha512-yHwomvolVafvUXhy5TdiJVkuNCxXn+bKOs2aWiWEQh/5YaV97Oa/abJz3dmx7lxgIUsUlS1Jl4mEfvJPo3YsVw==
 
+"@electric-sql/pglite@^0.5.8":
+  version "0.5.8"
+  resolved "https://registry.yarnpkg.com/@electric-sql/pglite/-/pglite-0.5.8.tgz#9b5b4a61a14d6cf96b3b4e2ea7f124f8d6fe68b3"
+  integrity sha512-n9tsbUOhwx2epK1V0ZG9Ar4SHWUju04dhmzZXiSBXwBoleOvIfals33NAaWgagQVAL4Rbvx/Ptsu3P+pA09f6Q==
+
 "@epic-web/invariant@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@epic-web/invariant/-/invariant-1.0.0.tgz#1073e5dee6dd540410784990eb73e4acd25c9813"
@@ -1118,9 +1123,9 @@ drizzle-kit@^1.0.0-rc.4:
     jiti "^2.6.1"
 
 drizzle-orm@^1.0.0-rc.4:
-  version "1.0.0-rc.5-ab785fc"
-  resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-1.0.0-rc.5-ab785fc.tgz#edb04f8b041abc7d11a4d571c232ed5882bff096"
-  integrity sha512-28PVt0PS/+4kPa8eKr4mqP8y/YcbdOgdVcGUa6LGl2Kd2bykNWuf/WUOFoSCoynagblbcRgMO1zChLvRcWD6Tg==
+  version "1.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-1.0.0-rc.4.tgz#30335073cc2bc9c6cffb5dcc153fe0b1225325d7"
+  integrity sha512-BT+pf+qoiYHqltoA88Jmf6ilGMXPlpfE0hEJKc2adRtMCAl25Swk/t5gXcWxZNAwdtf3F5gCd2FpeOyP/pT0Hw==
 
 ecdsa-sig-formatter@^1.0.11:
   version "1.0.11"

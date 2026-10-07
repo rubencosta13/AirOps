@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { authRepository } from "../../repository";
+import { authRepository } from "../../../repository";
 import { Password } from "@/plugins/password";
 import { sessionService } from "@/modules/sessions/service";
 import { User } from "@/db/schema/users";
 import { tokenService } from "@/modules/tokens/service";
-import { authService } from "../../service";
+import { authService } from "../../../service";
 import { UnauthorizedError } from "@/errors/app-error";
 
-vi.mock("../../repository");
+vi.mock("../../../repository");
 vi.mock("@/modules/sessions/service");
 vi.mock("@/modules/tokens/service");
 vi.mock("@/plugins/password");

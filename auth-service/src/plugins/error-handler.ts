@@ -32,7 +32,7 @@ export const fastifyErrorHandler = (
   }
 
   request.log.error(error);
-
+  console.log(error);
   return reply.status(500).send({
     error: "INTERNAL_SERVER_ERROR",
     message: "Something went wrong",

@@ -49,13 +49,13 @@ export const authRepository = {
       .select()
       .from(usersTable)
       .where(and(eq(usersTable.email, email), isNull(usersTable.deletedAt)));
+
     return user;
   },
 
   async createUser(data: SignUpSchema) {
     const [user] = await db.insert(usersTable).values(data).returning();
     const { password, ...userWithoutPassword } = user;
-
     return userWithoutPassword;
   },
 

@@ -5,5 +5,6 @@ export async function getAuthToken(payload: {
   sid: string;
   email: string;
 }) {
+  await server.ready();
   return server.jwt.sign(payload);
 }
