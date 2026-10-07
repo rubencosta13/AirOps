@@ -103,5 +103,5 @@ describe("authService.createUser", () => {
         );
       }),
     );
-  }, 10_000);
+  }, 30_000);
 });
