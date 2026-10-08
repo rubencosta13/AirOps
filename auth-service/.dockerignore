@@ -39,7 +39,6 @@ docker-compose*.yml
 *.log
 
 # Drizzle development files
-drizzle
 drizzle.config.*
 
 # Build/cache

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "test": "vitest",
+    "build": "tsc && tsc-alias",
     "test:unit": "vitest run src/modules/**/__tests__/unit",
     "test:integration": "vitest run src/modules/**/__tests__/integration",
     "test:coverage": "vitest run --coverage"
@@ -41,6 +42,7 @@
     "fast-check": "^4.10.2",
     "globals": "^17.9.0",
     "prettier": "3.9.6",
+    "tsc-alias": "^1.9.7",
     "tsx": "^4.23.5",
     "typescript": "^7.0.2",
     "typescript-eslint": "^8.66.0",

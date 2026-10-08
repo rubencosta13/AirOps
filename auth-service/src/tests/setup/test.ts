@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import { afterAll, beforeAll, vi } from "vitest";
+import { vi } from "vitest";
 
 // 1. Set ALL secrets first
 process.env.JWT_SECRET = randomBytes(32).toString("hex");

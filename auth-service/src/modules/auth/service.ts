@@ -13,11 +13,11 @@ import { emailService } from "@/email";
 import { passwordResetTokenService } from "../password-reset/service";
 import { emailValidationService } from "../email-validation/service";
 
-const TIMING_HASH = await new Password().hash("this-is-not-a-password");
-
 export const authService = {
   async signin(data: SignInSchema) {
     const passwordHelper = new Password();
+    const TIMING_HASH = await passwordHelper.hash("this-is-not-a-password");
+
     const user = await authRepository.findUserByEmail(data.email);
 
     const passwordsMatch = await passwordHelper.compare(
