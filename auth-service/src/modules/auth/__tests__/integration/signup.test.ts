@@ -50,4 +50,94 @@ describe("POST /api/auth/signup", () => {
 
     expect(response.statusCode).toBe(200);
   });
+
+  it("returns 400 when the name is missing", async () => {
+    const signupDetails = {
+      email: "test@test.com",
+      password: "this_is_a_password",
+    };
+
+    const response = await server.inject({
+      method: "POST",
+      url: "/api/auth/signup",
+      body: signupDetails,
+    });
+    expect(response.statusCode).toBe(400);
+    expect(JSON.parse(response.body)).toEqual({
+      error: "VALIDATION_ERROR",
+      fields: [
+        {
+          field: "name",
+          message: "Invalid input: expected string, received undefined",
+        },
+      ],
+      message: "The request is invalid",
+    });
+  });
+  it("returns 400 when the email is missing", async () => {
+    const signupDetails = {
+      name: "test user",
+      password: "this_is_a_password",
+    };
+
+    const response = await server.inject({
+      method: "POST",
+      url: "/api/auth/signup",
+      body: signupDetails,
+    });
+    expect(response.statusCode).toBe(400);
+    expect(JSON.parse(response.body)).toEqual({
+      error: "VALIDATION_ERROR",
+      fields: [
+        {
+          field: "email",
+          message: "Invalid input: expected string, received undefined",
+        },
+      ],
+      message: "The request is invalid",
+    });
+  });
+  it("returns 400 when the password is missing", async () => {
+    const signupDetails = {
+      name: "test user",
+      email: "test@test.com",
+    };
+
+    const response = await server.inject({
+      method: "POST",
+      url: "/api/auth/signup",
+      body: signupDetails,
+    });
+    expect(response.statusCode).toBe(400);
+    expect(JSON.parse(response.body)).toEqual({
+      error: "VALIDATION_ERROR",
+      fields: [
+        {
+          field: "password",
+          message: "Invalid input: expected string, received undefined",
+        },
+      ],
+      message: "The request is invalid",
+    });
+  });
+
+  it("returns 409 when the email is already registered", async () => {
+    const signupDetails: SignUpSchema = {
+      name: "test user",
+      email: "verified@airops.local",
+      password: "test_user",
+    };
+    await authService.createUser(signupDetails);
+
+    const response = await server.inject({
+      method: "POST",
+      url: "/api/auth/signup",
+      body: signupDetails,
+    });
+    expect(response.statusCode).toBe(409);
+    expect(JSON.parse(response.body)).toEqual({
+      error: "CONFLICT",
+      message: "Error creating user",
+    });
+  });
 });
