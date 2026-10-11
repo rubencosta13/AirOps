@@ -49,7 +49,7 @@ export const authRepository = {
       .select()
       .from(usersTable)
       .where(and(eq(usersTable.email, email), isNull(usersTable.deletedAt)));
-
+    
     return user;
   },
 

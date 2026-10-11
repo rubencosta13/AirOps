@@ -6,8 +6,9 @@ export default defineConfig({
     globals: true,
     environment: "node",
     include: ["src/**/*.{test,spec,property.test}.ts"],
-
+    hookTimeout: 30_000,
     setupFiles: ["src/tests/setup/test.ts"],
+    fsModuleCache: true,
     coverage: {
       provider: "v8",
       include: ["src/**/*.ts"],
