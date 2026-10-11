@@ -8,6 +8,7 @@ import {
   VerifyAccountSchema,
 } from "./schema";
 import { authService } from "./service";
+import { UnauthorizedError } from "@/errors/app-error";
 
 export const signIn = async (
   request: FastifyRequest<{ Body: SignInSchema }>,
@@ -62,7 +63,7 @@ export const refreshToken = async (
   reply: FastifyReply,
 ) => {
   const refreshToken = request.cookies.refresh_token;
-  if (!refreshToken) return reply.code(401).send("Missing refresh token");
+  if (!refreshToken) throw new UnauthorizedError("Missing refresh token");
 
   const tokens = await authService.refresh(refreshToken);
 

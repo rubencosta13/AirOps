@@ -23,6 +23,7 @@ async function setupAuthenticatedUser(
     name?: string;
   } = {},
 ) {
+ 
   const email = overrides.email ?? "john@example.com";
   const userId = overrides.userId ?? "user-123";
   const sessionId = overrides.sessionId ?? "12111";
