@@ -1,10 +1,27 @@
-import { User } from "@/db/schema/users";
-import { describe, expect, it, vi } from "vitest";
-import { authRepository } from "../../../repository";
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { authRepository } from "@/modules/auth/repository";
+import { User } from "@/db/schema";
+import db from "@/db";
 
-vi.mock("../../../repository");
+vi.mock("@/db", () => ({
+  default: {
+    select: vi.fn().mockReturnThis(),
+    from: vi.fn().mockReturnThis(),
+    where: vi.fn().mockReturnThis(),
+  },
+}));
 
-describe("authRepository.findUser", () => {
+const mockedDb = db as unknown as {
+  select: ReturnType<typeof vi.fn>;
+  from: ReturnType<typeof vi.fn>;
+  where: ReturnType<typeof vi.fn>;
+};
+
+describe("authRepository.findUserByEmail", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   const validUser: User = {
     id: "1",
     name: "TEST USER",
@@ -16,19 +33,20 @@ describe("authRepository.findUser", () => {
     verified: true,
     verifiedAt: new Date(),
   };
-  it("returns user's details from a valid email and valid user", async () => {
-    vi.mocked(authRepository.findUserByEmail).mockResolvedValue(validUser);
 
-    const details = await authRepository.findUserByEmail(validUser.email);
-    expect(authRepository.findUserByEmail).toHaveBeenCalledWith(
-      validUser.email,
-    );
-    expect(details).toEqual(validUser);
+  it("returns the user when found", async () => {
+    mockedDb.where.mockResolvedValue([validUser]);
+
+    const result = await authRepository.findUserByEmail(validUser.email);
+
+    expect(result).toEqual(validUser);
   });
+
   it("returns undefined when user is not found", async () => {
-    vi.mocked(authRepository.findUserByEmail).mockResolvedValue(null);
+    mockedDb.where.mockResolvedValue([]);
 
     const result = await authRepository.findUserByEmail("missing@test.com");
-    expect(result).toBeNull();
+
+    expect(result).toBeUndefined();
   });
 });

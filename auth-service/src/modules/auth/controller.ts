@@ -49,11 +49,10 @@ export const currentUser = async (
 export const logout = async (request: FastifyRequest, reply: FastifyReply) => {
   await authService.logout(request.cookies.refresh_token);
 
-  reply.clearCookie("refresh_token", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+  reply.setCookie("refresh_token", "", {
     path: "/",
+    maxAge: 0,
+    httpOnly: true,
   });
   return reply.status(204).send();
 };

@@ -11,7 +11,6 @@ vi.mock("@/db", () => ({
   },
 }));
 
-// Cast once so TypeScript is happy
 const mockedDb = db as unknown as {
   select: ReturnType<typeof vi.fn>;
   from: ReturnType<typeof vi.fn>;

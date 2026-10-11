@@ -2,6 +2,7 @@ import { authRepository } from "@/modules/auth/repository";
 import { authService } from "@/modules/auth/service";
 import { sessionRepository } from "@/modules/sessions/repository";
 import { tokenService } from "@/modules/tokens/service"; // adjust path
+import { randomBytes } from "node:crypto";
 import { vi } from "vitest";
 
 async function makeAccessToken(
@@ -66,4 +67,8 @@ async function setupAuthenticatedUser(
   return { token, email, userId, sessionId, name };
 }
 
-export { setupAuthenticatedUser, makeAccessToken };
+const makeRefreshToken = () => {
+  return randomBytes(64).toString("hex");
+};
+
+export { setupAuthenticatedUser, makeAccessToken, makeRefreshToken };
