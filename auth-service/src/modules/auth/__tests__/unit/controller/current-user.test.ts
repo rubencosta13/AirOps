@@ -81,7 +81,6 @@ describe("Current user controller", () => {
 
     expect(response.json()).not.toHaveProperty("password");
   });
-
   it("propagates errors from authService.getUserDetails", async () => {
     const { token } = await setupAuthenticatedUser();
 
@@ -126,7 +125,6 @@ describe("Current user controller", () => {
       }),
     );
   });
-
   it("accepts arbitrary valid access tokens and returns the matching user", async () => {
     const validUserArb = fc.record({
       email: fc.stringMatching(/^[a-zA-Z0-9]{1,20}@[a-zA-Z0-9]{1,20}\.com$/),
@@ -157,7 +155,6 @@ describe("Current user controller", () => {
       { numRuns: 50 },
     );
   });
-
   it("never crashes on arbitrary Authorization header values", async () => {
     await fc.assert(
       fc.asyncProperty(
