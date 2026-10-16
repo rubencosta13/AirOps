@@ -1,4 +1,4 @@
-import { ConflictError } from "@/shared/errors/app-error";
+import { ConflictError } from "@/errors/app-error";
 import { departuresRepository } from "./repository";
 import {
   CreateDepartureInput,
