@@ -1,4 +1,4 @@
-import { ConflictError } from "@/shared/errors/app-error";
+import { ConflictError } from "@/errors/app-error";
 import { tasksService } from "../tasks/service";
 import { TurnaroundStatus } from "./enums";
 import { turnaroundsRepository } from "./repository";
